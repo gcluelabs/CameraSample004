@@ -45,7 +45,7 @@ public class CameraSample extends Activity implements SensorEventListener {
 		mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
 		
 		// Sensorの取得とリスナーへの登録
-		List < Sensor > sensors = mSensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
+		List < Sensor > sensors = mSensorManager.getSensorList(Sensor.TYPE_MAGNETIC_FIELD);
 		if (sensors.size() > 0) {
 			Sensor sensor = sensors.get(0);
 			mSensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_FASTEST);
@@ -67,7 +67,7 @@ public class CameraSample extends Activity implements SensorEventListener {
 	@Override
 	public void onSensorChanged(SensorEvent sensorEvent) {
 		Log.i("SURFACE", "SensorChanged()");
-		if (sensorEvent.sensor.getType() == Sensor.TYPE_ORIENTATION) {
+		if (sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
 			Log.i("SURFACE", "yaw:" + sensorEvent.values[0]);
 			Log.i("SURFACE", "picth:" + sensorEvent.values[1]);
 			Log.i("SURFACE", "roll:" + sensorEvent.values[2]);
@@ -105,9 +105,9 @@ class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 		Log.i("CAMERA", "surfaceChaged");
 
 		// 画面設定
-		Camera.Parameters parameters = mCamera.getParameters();
-		parameters.setPreviewSize(width, height);
-		mCamera.setParameters(parameters);
+//		Camera.Parameters parameters = mCamera.getParameters();
+//		parameters.setPreviewSize(width, height);
+//		mCamera.setParameters(parameters);
 
 		// プレビュー表示を開始
 		mCamera.startPreview();
@@ -208,11 +208,11 @@ class MyView extends View {
 
 		// 線で描画
 		canvas.drawLine(x, y, 50, 50, mainPaint);
-		
+		mainPaint.setTextSize(40);
 		// 文字を描画
-		canvas.drawText(""+yaw, 10, 10, mainPaint);
-		canvas.drawText(""+roll, 10, 30, mainPaint);
-		canvas.drawText(""+pitch, 10, 50, mainPaint);
+		canvas.drawText(""+yaw, 10, 40, mainPaint);
+		canvas.drawText(""+roll, 10, 80, mainPaint);
+		canvas.drawText(""+pitch, 10, 120, mainPaint);
 	}
 
 	/**
